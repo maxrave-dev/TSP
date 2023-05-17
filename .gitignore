@@ -1,0 +1,9 @@
+/build
+/dist
+app.spec
+main.spec
+/dist/main.exe
+*.exe
+*.spec
+*.pyc
+*.zip
