@@ -5,7 +5,7 @@ from matplotlib.pyplot import figure
 from matplotlib.figure import Figure
 
 
-    
+# Định nghĩa Plot Widget
 class MplWidget(QWidget):
     
     def __init__(self, parent = None):

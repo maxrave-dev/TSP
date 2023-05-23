@@ -1,22 +1,21 @@
 import sys
-from typing import Optional
+# PyQt6 giúp tạo giao diện người dùng
 from PyQt6.QtWidgets import QApplication, QWidget, QMainWindow, QDialog, QVBoxLayout, QLabel
-import PyQt6.QtWidgets as QtWidgets
-from matplotlib.backend_bases import FigureCanvasBase
 from TSP import Ui_MainWindow
+# Import code thuật toán chính
 import algorithm as A
+
+# Các thư viện hỗ trợ Async
 import asyncio
 from asyncqt import QEventLoop, asyncSlot
-from PyQt6.QtCore import QThread, pyqtSignal, pyqtSlot, QObject, QRunnable, QThreadPool, QCoreApplication
 import qtinter
-import asyncio
-import random
-import numpy as np
-import pyqtgraph as pg
-from decimal import Decimal
-import matplotlib.pyplot as plt
-from matplotlib.backends.backend_qtagg import FigureCanvasQTAgg as FigureCanvas
 
+# Các thư viện hỗ trợ vẽ đồ thị
+import numpy as np
+import matplotlib.pyplot as plt
+
+
+# Hàm này dùng để chuyển đổi dữ liệu từ list sang array, mục đích nhằm phục vụ cho việc vẽ đồ thị
 def convert_to_array(list):
     result = []
     for i in list:
@@ -24,6 +23,8 @@ def convert_to_array(list):
         a = np.array([x, y])
         result.append(a)
     return result
+
+# Định nghĩa Custom Alert Dialog
 class AlertDialog(QDialog):
     def __init__(self, message):
         super().__init__()
@@ -38,6 +39,8 @@ class AlertDialog(QDialog):
             self.message = QLabel(message)
         self.layout.addWidget(self.message)
         self.setLayout(self.layout)
+
+# Lớp Xử lý UI và Sự kiện chính
 class Core(QMainWindow, Ui_MainWindow):
     def __init__(self, parent=None):
         super().__init__(parent=parent)
@@ -47,31 +50,31 @@ class Core(QMainWindow, Ui_MainWindow):
         self.ui.btStart.clicked.connect(self.start)
         self.ui.btStop.clicked.connect(self.stop)
         self.task = None
-        
+
+    # Dừng thuật toán 
     def stop(self):  
         self.isRunning = False
+
+    # Khởi động thuật toán
     def start(self):
         if self.isRunning == False:
             if (self.ui.sbNumberDestinations.value()) > 1:
                 self.isRunning = True
                 print("Start")
+                # Init Simulated Annealing
                 map = A.Map(A.random_city(self.ui.sbNumberDestinations.value()))
                 sa = A.SimulatedAnnealing(map, 100, 0.95, float(self.ui.sbDelayTime.value()))
+                # Init Plot
                 self.ui.canvaWidget.canvas.axes.set_xlim(0, 100)
                 self.ui.canvaWidget.canvas.axes.set_ylim(0, 100)
                 data = convert_to_array(map.cities)
-                # for i in data:
-                #     self.ui.canvaWidget.canvas.axes.plot([i[0]], [i[1]],'o')
-                #     print(i[0], i[1])
-                # self.ui.canvaWidget.canvas.draw()
-                
-                # data = convert_to_array(map.cities)
-                # print(data)
+                # Task 1: Cập nhật trạng thái thuật toán
                 async def update_state():
                     while self.isRunning == True:
                         await asyncio.sleep(sa.delay)
                         sa.isRunning = self.isRunning
                     sa.isRunning == False
+                # Task 2: Cập nhật đồ thị
                 async def update_plot():
                     while self.isRunning == True:
                         print(sa.current_solution)
@@ -89,6 +92,7 @@ class Core(QMainWindow, Ui_MainWindow):
                             self.ui.canvaWidget.canvas.axes.plot(x_value, y_value, 'c')
                         self.ui.canvaWidget.canvas.draw()
                         await asyncio.sleep(sa.delay)
+                # Task 3: Cập nhật kết quả trên Text Browser
                 async def update_result():
                     while self.isRunning == True:
                         await asyncio.sleep(sa.delay)
@@ -99,6 +103,7 @@ class Core(QMainWindow, Ui_MainWindow):
                             self.ui.tbResult.append("#: " + str(data[0]) + " | Temperature: " + str(data[1]) + " | Solution: " + str(data[2]) + " | Cost: " + str(data[3]))
                         print(sa.result)
                 
+                # Task 4: Gom tất cả Task con lại vào 1 Task lớn
                 async def all():
                     task = [asyncio.create_task(update_result()), asyncio.create_task(sa.solve()), asyncio.create_task(update_plot()), asyncio.create_task(update_state())]
                     self.task = asyncio.gather(*task)

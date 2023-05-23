@@ -35,9 +35,6 @@ class Ui_MainWindow(object):
         self.btStop = QtWidgets.QPushButton(parent=self.centralwidget)
         self.btStop.setGeometry(QtCore.QRect(160, 560, 75, 24))
         self.btStop.setObjectName("btStop")
-        # self.btReset = QtWidgets.QPushButton(parent=self.centralwidget)
-        # self.btReset.setGeometry(QtCore.QRect(160, 590, 75, 24))
-        # self.btReset.setObjectName("btReset")
         self.tbResult = QtWidgets.QTextBrowser(parent=self.centralwidget)
         self.tbResult.setGeometry(QtCore.QRect(280, 531, 511, 181))
         self.tbResult.setObjectName("tbResult")
@@ -66,6 +63,5 @@ class Ui_MainWindow(object):
         self.label_2.setText(_translate("MainWindow", "Number of Destinations"))
         self.btStart.setText(_translate("MainWindow", "Start"))
         self.btStop.setText(_translate("MainWindow", "Stop"))
-        # self.btReset.setText(_translate("MainWindow", "Reset"))
         self.label_3.setText(_translate("MainWindow", "Result"))
 from mplwidget import MplWidget
