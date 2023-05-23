@@ -33,10 +33,7 @@ class AlertDialog(QDialog):
         self.setFixedHeight(100)
         self.setModal(True)
         self.layout = QVBoxLayout()
-        if message == None:
-            self.message = QLabel("Please enter the number of destinations")
-        else:
-            self.message = QLabel(message)
+        self.message = QLabel(message)
         self.layout.addWidget(self.message)
         self.setLayout(self.layout)
 
@@ -82,14 +79,21 @@ class Core(QMainWindow, Ui_MainWindow):
                         self.ui.canvaWidget.canvas.axes.clear()
                         index = 0
                         for i in data:
-                            self.ui.canvaWidget.canvas.axes.plot([i[0]], [i[1]],'o', markersize=12)
-                            self.ui.canvaWidget.canvas.axes.text(i[0], i[1], index)
+                            if index == 0:
+                                self.ui.canvaWidget.canvas.axes.plot([i[0]], [i[1]],'o', markersize=12, color='r')
+                                self.ui.canvaWidget.canvas.axes.text(i[0]+1, i[1]+2, index)
+                            else:
+                                self.ui.canvaWidget.canvas.axes.plot([i[0]], [i[1]],'o', markersize=12, color='c')
+                                self.ui.canvaWidget.canvas.axes.text(i[0]+1, i[1]+2, index)
                             print(i[0], i[1])
                             index+=1
                         for i in range(0, len(temp)-1, 1):
                             x_value = [data[temp[i]][0], data[temp[i+1]][0]]
                             y_value = [data[temp[i]][1], data[temp[i+1]][1]]
                             self.ui.canvaWidget.canvas.axes.plot(x_value, y_value, 'c')
+                        x_value = [data[temp[len(temp)-1]][0], data[temp[0]][0]]
+                        y_value = [data[temp[len(temp)-1]][1], data[temp[0]][1]]
+                        self.ui.canvaWidget.canvas.axes.plot(x_value, y_value, 'c')
                         self.ui.canvaWidget.canvas.draw()
                         await asyncio.sleep(sa.delay)
                 # Task 3: Cập nhật kết quả trên Text Browser
@@ -101,11 +105,16 @@ class Core(QMainWindow, Ui_MainWindow):
                         if (sa.result != []):
                             data = sa.result[len(sa.result)-1]
                             self.ui.tbResult.append("#: " + str(data[0]) + " | Temperature: " + str(data[1]) + " | Solution: " + str(data[2]) + " | Cost: " + str(data[3]))
+                            if (data[4] <= 1e-5):
+                                self.isRunning = False
+                                self.ui.tbResult.clear()
+                                self.ui.tbResult.append("\n"+"BEST SOLUTION: "+ "\n" +"#: " + str(data[0]) + " | Temperature: " + str(data[1]) + " | Solution: " + str(data[2]) + " | Cost: " + str(data[3]))
+                                break
                         print(sa.result)
                 
                 # Task 4: Gom tất cả Task con lại vào 1 Task lớn
                 async def all():
-                    task = [asyncio.create_task(update_result()), asyncio.create_task(sa.solve()), asyncio.create_task(update_plot()), asyncio.create_task(update_state())]
+                    task = [asyncio.create_task(update_state()), asyncio.create_task(sa.solve()), asyncio.create_task(update_plot()), asyncio.create_task(update_result())]
                     self.task = asyncio.gather(*task)
                     while self.isRunning == True:
                         await self.task
@@ -119,7 +128,7 @@ class Core(QMainWindow, Ui_MainWindow):
                 dlg = AlertDialog("Please enter the number of destinations")
                 dlg.exec()
         else:
-            dlg = AlertDialog()
+            dlg = AlertDialog("Please stop the current algorithm before starting a new one")
             dlg.exec()
 
 if __name__ == "__main__":

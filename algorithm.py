@@ -72,7 +72,7 @@ class SimulatedAnnealing:
             # Lưu trữ giải pháp hiện tại
             temp_str = round(Decimal(temperature), 8)
             result = [i, temp_str, current_solution, self.cost(current_solution)]
-            self.result.append(result)
+            
             print("Giải pháp hiện tại:", str(current_solution))
             # Sinh một giải pháp mới
             new_solution = self.generate_new_solution(current_solution)
@@ -94,6 +94,8 @@ class SimulatedAnnealing:
             # Giảm nhiệt độ
             temperature = temperature*self.cooling_factor
             temp_str = round(Decimal(temperature), 8)
+            result.append(temperature)
+            self.result.append(result)
             # Trả về giải pháp tốt nhất 
         # return best_solution
 def random_city(number):
