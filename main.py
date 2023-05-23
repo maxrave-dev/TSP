@@ -77,6 +77,13 @@ class Core(QMainWindow, Ui_MainWindow):
                         print(sa.current_solution)
                         temp = sa.current_solution
                         self.ui.canvaWidget.canvas.axes.clear()
+                        for i in range(0, len(temp)-1, 1):
+                            x_value = [data[temp[i]][0], data[temp[i+1]][0]]
+                            y_value = [data[temp[i]][1], data[temp[i+1]][1]]
+                            self.ui.canvaWidget.canvas.axes.plot(x_value, y_value, 'c')
+                        x_value = [data[temp[len(temp)-1]][0], data[temp[0]][0]]
+                        y_value = [data[temp[len(temp)-1]][1], data[temp[0]][1]]
+                        self.ui.canvaWidget.canvas.axes.plot(x_value, y_value, 'c')
                         index = 0
                         for i in data:
                             if index == 0:
@@ -87,13 +94,6 @@ class Core(QMainWindow, Ui_MainWindow):
                                 self.ui.canvaWidget.canvas.axes.text(i[0]+1, i[1]+2, index)
                             print(i[0], i[1])
                             index+=1
-                        for i in range(0, len(temp)-1, 1):
-                            x_value = [data[temp[i]][0], data[temp[i+1]][0]]
-                            y_value = [data[temp[i]][1], data[temp[i+1]][1]]
-                            self.ui.canvaWidget.canvas.axes.plot(x_value, y_value, 'c')
-                        x_value = [data[temp[len(temp)-1]][0], data[temp[0]][0]]
-                        y_value = [data[temp[len(temp)-1]][1], data[temp[0]][1]]
-                        self.ui.canvaWidget.canvas.axes.plot(x_value, y_value, 'c')
                         self.ui.canvaWidget.canvas.draw()
                         await asyncio.sleep(sa.delay)
                 # Task 3: Cập nhật kết quả trên Text Browser
