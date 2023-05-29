@@ -32,6 +32,7 @@ class SimulatedAnnealing:
             city1 = path[i]
             city2 = path[i + 1]
             total_cost += self.distance(city1, city2)
+        total_cost += self.distance(path[-1], path[0])
         return total_cost
 
     # Tạo một giải pháp ban đầu
@@ -71,7 +72,9 @@ class SimulatedAnnealing:
             await asyncio.sleep(self.delay)
             # Lưu trữ giải pháp hiện tại
             temp_str = round(Decimal(temperature), 8)
-            result = [i, temp_str, current_solution, self.cost(current_solution)]
+            temp_solution = current_solution[:]
+            temp_solution.append(current_solution[0])
+            result = [i, temp_str, temp_solution, self.cost(current_solution)]
             
             print("Giải pháp hiện tại:", str(current_solution))
             # Sinh một giải pháp mới
