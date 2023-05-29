@@ -7,7 +7,6 @@ import algorithm as A
 
 # Các thư viện hỗ trợ Async
 import asyncio
-from asyncqt import QEventLoop, asyncSlot
 import qtinter
 
 # Các thư viện hỗ trợ vẽ đồ thị
@@ -85,8 +84,9 @@ class Core(QMainWindow, Ui_MainWindow):
                         y_value = [data[temp[len(temp)-1]][1], data[temp[0]][1]]
                         self.ui.canvaWidget.canvas.axes.plot(x_value, y_value, 'c')
                         index = 0
-                        for i in data:
-                            if index == 0:
+                        for x in range(0, len(data), 1):
+                            i = data[x]
+                            if x == temp[0]:
                                 self.ui.canvaWidget.canvas.axes.plot([i[0]], [i[1]],'o', markersize=12, color='r')
                                 self.ui.canvaWidget.canvas.axes.text(i[0]+1, i[1]+2, index)
                             else:
