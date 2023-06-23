@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1376</width>
-    <height>970</height>
+    <height>877</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -84,10 +84,10 @@
    <widget class="QTextBrowser" name="tbResult">
     <property name="geometry">
      <rect>
-      <x>1060</x>
-      <y>650</y>
-      <width>291</width>
-      <height>181</height>
+      <x>1070</x>
+      <y>570</y>
+      <width>281</width>
+      <height>251</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -97,8 +97,8 @@
    <widget class="QLabel" name="label_3">
     <property name="geometry">
      <rect>
-      <x>1060</x>
-      <y>620</y>
+      <x>1070</x>
+      <y>550</y>
       <width>49</width>
       <height>16</height>
      </rect>
@@ -192,8 +192,8 @@
    <widget class="QLabel" name="label_5">
     <property name="geometry">
      <rect>
-      <x>1060</x>
-      <y>460</y>
+      <x>1070</x>
+      <y>300</y>
       <width>91</width>
       <height>16</height>
      </rect>
@@ -208,8 +208,8 @@
    <widget class="QComboBox" name="cbAddLocation">
     <property name="geometry">
      <rect>
-      <x>1060</x>
-      <y>480</y>
+      <x>1070</x>
+      <y>320</y>
       <width>151</width>
       <height>22</height>
      </rect>
@@ -218,8 +218,8 @@
    <widget class="QPushButton" name="btAdd">
     <property name="geometry">
      <rect>
-      <x>1240</x>
-      <y>480</y>
+      <x>1250</x>
+      <y>320</y>
       <width>75</width>
       <height>24</height>
      </rect>
@@ -234,8 +234,8 @@
    <widget class="QLabel" name="label_6">
     <property name="geometry">
      <rect>
-      <x>1060</x>
-      <y>510</y>
+      <x>1070</x>
+      <y>350</y>
       <width>111</width>
       <height>16</height>
      </rect>
@@ -245,16 +245,6 @@
     </property>
     <property name="text">
      <string>Current Location</string>
-    </property>
-   </widget>
-   <widget class="QTextBrowser" name="tbCurrentLocation">
-    <property name="geometry">
-     <rect>
-      <x>1060</x>
-      <y>530</y>
-      <width>291</width>
-      <height>81</height>
-     </rect>
     </property>
    </widget>
    <widget class="QLabel" name="label_7">
@@ -308,6 +298,32 @@
      <number>20000</number>
     </property>
    </widget>
+   <widget class="QListWidget" name="listLocation">
+    <property name="geometry">
+     <rect>
+      <x>1070</x>
+      <y>370</y>
+      <width>271</width>
+      <height>131</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btRemove">
+    <property name="geometry">
+     <rect>
+      <x>1260</x>
+      <y>510</y>
+      <width>75</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string/>
+    </property>
+    <property name="text">
+     <string>Remove</string>
+    </property>
+   </widget>
    <zorder>label</zorder>
    <zorder>sbDelayTime</zorder>
    <zorder>btStart</zorder>
@@ -322,10 +338,11 @@
    <zorder>cbAddLocation</zorder>
    <zorder>btAdd</zorder>
    <zorder>label_6</zorder>
-   <zorder>tbCurrentLocation</zorder>
    <zorder>label_7</zorder>
    <zorder>label_8</zorder>
    <zorder>spinBox</zorder>
+   <zorder>listLocation</zorder>
+   <zorder>btRemove</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
