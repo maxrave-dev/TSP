@@ -7,3 +7,6 @@ main.spec
 *.spec
 *.pyc
 *.zip
+test.py
+TSP.py
+TSP.ui
