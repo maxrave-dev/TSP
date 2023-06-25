@@ -4,12 +4,9 @@ import math
 from decimal import Decimal
 import pandas as pd
 import numpy as np
-
-x = [200, 250, 425, 155, 300, 353, 395, 430, 510, 700, 365, 388, 437, 430, 465, 490, 507, 360, 555, 522, 738]
-y = [950, 750, 745, 515, 510, 585, 615, 680, 615, 640, 495, 528, 510, 544, 563, 547, 520, 445, 470, 361, 93]
-name = ["Củ Chi", "Hooc Môn", "Quận 12", "Bình Chánh", "Bình Tân", "Tân Phú", "Tân Bình", "Gò Vấp", "Bình Thạnh", "Thành phố Thủ Đức", "Quận 6", "Quận 11", "Quận 5", "Quận 10", "Quận 3", "Quận 1", "Quận 4", "Quận 8", "Quận 7", "Nhà Bè", "Cần Giờ"]
-
-data = [{"name": "Củ Chi", "x": 200, "y": 950}, {"name": "Hooc Môn", "x": 250, "y": 750}, {"name": "Quận 12", "x": 425, "y": 745}, {"name": "Bình Chánh", "x": 155, "y": 515}, {"name": "Bình Tân", "x": 300, "y": 510}, {"name": "Tân Phú", "x": 353, "y": 585}, {"name": "Tân Bình", "x": 395, "y": 615}, {"name": "Gò Vấp", "x": 430, "y": 680}, {"name": "Bình Thạnh", "x": 510, "y": 615}, {"name": "Thành phố Thủ Đức", "x": 700, "y": 640}, {"name": "Quận 6", "x": 365, "y": 495}, {"name": "Quận 11", "x": 388, "y": 528}, {"name": "Quận 5", "x": 437, "y": 510}, {"name": "Quận 10", "x": 430, "y": 544}, {"name": "Quận 3", "x": 465, "y": 563}, {"name": "Quận 1", "x": 490, "y": 547}, {"name": "Quận 4", "x": 507, "y": 520}, {"name": "Quận 8", "x": 360, "y": 445}, {"name": "Quận 7", "x": 555, "y": 470}, {"name": "Nhà Bè", "x": 522, "y": 361}, {"name": "Cần Giờ", "x": 738, "y": 93}]
+from constant import name
+from constant import data_x as x
+from constant import data_y as y
 
 df = pd.read_excel('distance.xlsx', index_col=0, header=0)
 np = df.to_numpy()
@@ -120,42 +117,3 @@ class SimulatedAnnealing:
             temp_str = round(Decimal(temperature), 8)
             result.append(temperature)
             self.result.append(result)
-            # Trả về giải pháp tốt nhất 
-        # return best_solution
-def random_city(number):
-    cities = []
-    for i in range(number):
-        x = random.randint(0, 100)
-        y = random.randint(0, 100)
-        cities.append((x, y))
-    return cities
-
-def create_city():
-    x = [200, 250, 425, 155, 300, 353, 395, 430, 510, 700, 365, 388, 437, 430, 465, 490, 507, 360, 555, 522, 738]
-    y = [950, 750, 745, 515, 510, 585, 615, 680, 615, 640, 495, 528, 510, 544, 563, 547, 520, 445, 470, 361, 93]
-    city = []
-    for i in range(len(x)):
-        city.append((x[i], y[i]))
-    return city
-def main():
-    # Định nghĩa bản đồ
-    cities = [
-        (0, 0),
-        (1, 2),
-        (3, 1),
-        (5, 3),
-        (6, 5),
-        (4, 6),
-        (2, 5),
-        (1, 4)
-    ]
-    map = Map(cities)
-    # Khởi tạo thuật toán
-    initial_temperature = 100
-    cooling_factor = 0.25
-    sa = SimulatedAnnealing(map, initial_temperature, cooling_factor)
-    # Giải bài toán
-    best_solution = sa.solve()
-    print("Giải pháp tốt nhất:", best_solution)
-    print("Chi phí tốt nhất:", sa.cost(best_solution))
-    # Hiển thị kết quả

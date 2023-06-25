@@ -16,7 +16,7 @@ import matplotlib.pyplot as plt
 
 import constant as C
 
-name = ["Củ Chi", "Hooc Môn", "Quận 12", "Bình Chánh", "Bình Tân", "Tân Phú", "Tân Bình", "Gò Vấp", "Bình Thạnh", "Thành phố Thủ Đức", "Quận 6", "Quận 11", "Quận 5", "Quận 10", "Quận 3", "Quận 1", "Quận 4", "Quận 8", "Quận 7", "Nhà Bè", "Cần Giờ"]
+from constant import name
 
 
 # Hàm này dùng để chuyển đổi dữ liệu từ list sang array, mục đích nhằm phục vụ cho việc vẽ đồ thị
@@ -56,10 +56,11 @@ class Core(QMainWindow, Ui_MainWindow):
         self.task = None
         for i in name:
             self.ui.cbAddLocation.addItem(i)
+
+    # Thêm địa điểm 
     def add_location(self):
         temp = self.ui.cbAddLocation.currentText()
         index = name.index(temp)
-        # self.list_location.append(C.cities[index])
         search = self.ui.listLocation.findItems(temp, QtCore.Qt.MatchFlag.MatchExactly)
         if (len(search) >= 1):
             AlertDialog("This location was added before").exec()
@@ -78,6 +79,7 @@ class Core(QMainWindow, Ui_MainWindow):
                 self.ui.canvaWidget.canvas.axes.text(i[0]+1, i[1]+2, name[C.data_xy.index({"x": i[0], "y": i[1]})], fontsize=8)
             self.ui.canvaWidget.canvas.draw()
 
+    # Xoá địa điểm 
     def remove_location(self):
         selected = self.ui.listLocation.selectedItems()
         if (len(selected) > 0):
@@ -166,7 +168,7 @@ class Core(QMainWindow, Ui_MainWindow):
                                 if (data[5] <= 1e-5):
                                     self.isRunning = False
                                     self.ui.tbResult.clear()
-                                    self.ui.tbResult.append("\n"+"BEST SOLUTION: "+ "\n" +"#: " + str(data[0]) + " | Temperature: " + str(data[1]) + " | Solution: " + str(data[2]) + " | Distance: " + str(data[3]) + "km | Cost: " + str(data[4]) + "VND")
+                                    self.ui.tbResult.append("BEST SOLUTION: "+ "\n" +"#: " + str(data[0]) + " | Temperature: " + str(data[1]) + " | Solution: " + str(data[2]) + " | Distance: " + str(data[3]) + "km | Cost: " + str(data[4]) + "VND")
                                     break
                     
                     # Task 4: Gom tất cả Task con lại vào 1 Task lớn
