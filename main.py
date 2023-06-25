@@ -75,7 +75,7 @@ class Core(QMainWindow, Ui_MainWindow):
             for index in range(0, len(data), 1):
                 i = data[index]
                 self.ui.canvaWidget.canvas.axes.plot([i[0]], [i[1]],'o', markersize=5, color='c')
-                self.ui.canvaWidget.canvas.axes.text(i[0]+1, i[1]+2, name[C.data_y.index(i[1])], fontsize=8)
+                self.ui.canvaWidget.canvas.axes.text(i[0]+1, i[1]+2, name[C.data_xy.index({"x": i[0], "y": i[1]})], fontsize=8)
             self.ui.canvaWidget.canvas.draw()
 
     def remove_location(self):
@@ -93,7 +93,7 @@ class Core(QMainWindow, Ui_MainWindow):
             for index in range(0, len(data), 1):
                 i = data[index]
                 self.ui.canvaWidget.canvas.axes.plot([i[0]], [i[1]],'o', markersize=5, color='c')
-                self.ui.canvaWidget.canvas.axes.text(i[0]+1, i[1]+2, name[C.data_x.index(i[0])], fontsize=8)
+                self.ui.canvaWidget.canvas.axes.text(i[0]+1, i[1]+2, name[C.data_xy.index({"x": i[0], "y": i[1]})], fontsize=8)
             self.ui.canvaWidget.canvas.draw()
     # Dừng thuật toán 
     def stop(self):  
@@ -107,7 +107,7 @@ class Core(QMainWindow, Ui_MainWindow):
         for index in range(0, len(data), 1):
             i = data[index]
             self.ui.canvaWidget.canvas.axes.plot([i[0]], [i[1]],'o', markersize=5, color='c')
-            self.ui.canvaWidget.canvas.axes.text(i[0]+1, i[1]+2, name[C.data_x.index(i[0])], fontsize=8)
+            self.ui.canvaWidget.canvas.axes.text(i[0]+1, i[1]+2, name[C.data_xy.index({"x": i[0], "y": i[1]})], fontsize=8)
         self.ui.canvaWidget.canvas.draw()
     # Khởi động thuật toán
     def start(self):
@@ -147,10 +147,10 @@ class Core(QMainWindow, Ui_MainWindow):
                                 i = data[x]
                                 if x == temp[0]:
                                     self.ui.canvaWidget.canvas.axes.plot([i[0]], [i[1]],'o', markersize=5, color='r')
-                                    self.ui.canvaWidget.canvas.axes.text(i[0]+1, i[1]+2, name[C.data_x.index(i[0])], fontsize=8)
+                                    self.ui.canvaWidget.canvas.axes.text(i[0]+1, i[1]+2, name[C.data_xy.index({"x": i[0], "y": i[1]})], fontsize=8)
                                 else:
                                     self.ui.canvaWidget.canvas.axes.plot([i[0]], [i[1]],'o', markersize=5, color='c')
-                                    self.ui.canvaWidget.canvas.axes.text(i[0]+1, i[1]+2, name[C.data_x.index(i[0])], fontsize=8)
+                                    self.ui.canvaWidget.canvas.axes.text(i[0]+1, i[1]+2, name[C.data_xy.index({"x": i[0], "y": i[1]})], fontsize=8)
                                 index+=1
                             self.ui.canvaWidget.canvas.draw()
                             await asyncio.sleep(sa.delay)
