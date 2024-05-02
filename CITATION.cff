@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+  - family-names: Nguyen Duc
+    given-names: Tuan Minh
+    orcid: https://orcid.org/0009-0009-4212-9180
+title: "TSP using Simulated Annealing in Ho Chi Minh City"
+abstract: The UI app uses Simulated Annealing to resolve TSP in Ho Chi Minh City. This is useful for all subjects that work around optimizing in HCM City.
+version: 1.0.0
+date-released: 2023-07-07
